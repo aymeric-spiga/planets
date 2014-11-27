@@ -1,7 +1,9 @@
 # modified by A. Spiga from files associated with R. Pierrehumbert's book
-# added the posibility to use method associated with planets objects
+# added the possibility to use method associated with planets objects
 
+import os
 import numpy as np
+
 
 #Planetary database
 #Source for planetary data, and some of the data on
@@ -23,28 +25,37 @@ G = 6.67428e-11        #Gravitational constant (2006 measurements)
 N_avogadro = 6.022136736e23  #Avogadro's number
 Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
 
+
+desc = {}
+desc["a"] = "Mean radius of planet (m)"
+desc["g"] = "Surface gravitational acceleration (m/s**2)"
+desc["L"] = "Annual mean solar constant (current) (W/m**2)"
+desc["albedo"] = "Bond albedo (fraction)"
+desc["rsm"] = "Semi-major axis of orbit about Sun (m)"
+desc["year"] = "Sidereal length of year (s)"
+desc["eccentricity"] = "Eccentricity (unitless)"
+desc["day"] = "Mean tropical length of day (s)"
+desc["obliquity"] = "Obliquity to orbit (degrees)"
+desc["Lequinox"] = "Longitude of equinox (degrees)"
+desc["Tsbar"] = "Mean surface temperature (K)"
+desc["Tsmax"] = "Maximum surface temperature (K)"
+desc["name"] = "Name of the planet"
+desc["M"] = "Molecular weight (g/mol)"
+desc["T0"] = "Typical atmospheric temperature (K)" 
+desc["cp"] = "Specific heat capacity (J kg-1 K-1)"
+
 class Planet:
     '''
     A Planet object contains basic planetary data.
-    If P is a Planet object, the data are:
-           P.name = Name of the planet
-           P.a = Mean radius of planet (m)
-           P.g = Surface gravitational acceleration (m/s**2)
-           P.L = Annual mean solar constant (current) (W/m**2)
-           P.albedo Bond albedo (fraction)
-           
-           P.rsm = Semi-major axis of orbit about Sun (m)
-           P.year = Sidereal length of year (s)
-           P.eccentricity =  Eccentricity (unitless)
-           P.day = Mean tropical length of day (s)
-           P.obliquity = Obliquity to orbit (degrees)
-           P.Lequinox = Longitude of equinox (degrees)
-
-           P.Tsbar = Mean surface temperature (K)
-           P.Tsmax = Maximum surface temperature (K)
+   
+    "print planets.desc" for information
 
     For gas giants, "surface" quantities are given at the 1 bar level
     '''
+
+############################################
+### INIT
+############################################
 
     #__repr__ object prints out a help string when help is
     #invoked on the planet object or the planet name is typed
@@ -53,6 +64,7 @@ class Planet:
         'This planet object contains information on %s\n'%self.name
         line2 = 'Type \"help(Planet)\" for more information\n'
         return line1+line2
+
     def __init__(self):
         self.name = None #Name of the planet
         self.a = None #Mean radius of planet
@@ -70,10 +82,77 @@ class Planet:
         self.Tsbar = None #Mean surface temperature
         self.Tsmax = None #Maximum surface temperature
 
-        self.R = None #planetary gas constant 
+        self.M = None #molar mass in grams per mol
         self.cp = None #specific heat capacity
 
         self.T0 = None #typical atm temperature
+
+############################################
+### USEFUL METHODS FOR VALUES
+############################################
+
+    def show(self):
+        # show objects attributes
+        for k, v in vars(self).items():
+          print k,v,desc[k]
+
+    def convsecond(self):
+        # convert earth days and hours in seconds
+        self.year = self.year*24.*3600.
+        self.day = self.day*3600.
+
+    def ini(self,name):
+        # either have the file "name.txt" in /planet
+        # ... or have it where you call
+        string = "planetoplot"
+        whereset = "./"
+        for path in os.environ['PYTHONPATH'].split(os.pathsep):
+          if string in path: whereset = path + "/planet"
+        if whereset[-1] != "/": whereset = whereset + "/"
+        # be consistent
+        self.name = name
+        # set a dictionary with what's in the txt file
+        cstplan = {}
+        try: 
+           f = open(whereset+name+".txt", 'r')
+           for line in f:
+            if "#" not in line and line != '\n' and line != '':
+             variable,value = line.strip().split('=')
+             cstplan[variable.strip()] = value.strip() 
+           f.close()
+        except IOError: 
+           print "file not found: ",name+".txt" ; exit()
+        # fill in object's attributes
+        for k, v in vars(self).items():
+          if k != "name":
+            getval = cstplan[k]
+            try:
+              v = np.float(getval)
+            except:
+              #print k + " no value in file, set to None"
+              v = None
+            setattr(self,k,v)
+        # do necessary converting
+        self.convsecond()
+
+############################################
+### PHYSICAL CALCULATIONS as METHODS
+############################################
+
+    def R(self): return Rstarkilo/self.M
+        # planetary gas constant
+
+    def dryadiab(self): return self.g/self.cp
+        # adiabatic lapse rate
+
+    def omega(self): return 2.*np.pi/self.day
+        # planetary rotation rate
+
+    def eqtemp(self): 
+        # calculate equivalent temperature
+        num = (1.-self.albedo)*self.L
+        den = 4.*sigma
+        return (num/den)**0.25
 
     def N2(self,T0=None,dTdz=None):
         # calculate Brunt-Vaisala frequency
@@ -81,17 +160,17 @@ class Planet:
         # --> NB: dTdz could be an array
         if T0 is None: T0=self.T0
         if dTdz is None: dTdz=0.
-        return (self.g / T0) * ( self.g/self.cp + dTdz )
+        return (self.g / T0) * ( self.dryadiab() + dTdz )
 
     def H(self,T0=None):
         # calculate scale height
         if T0 is None: T0=self.T0
-        out = self.R * T0 / self.g
+        out = self.R() * T0 / self.g
         return out
 
     def dispeqw(self,s,sigma,nu=0,lz=None,h=None,N2=None):
         a = self.a
-        omega = 2.*np.pi/self.day
+        omega = self.omega()
         g = self.g
         H = self.H()
         if N2 is None:
@@ -109,6 +188,7 @@ class Planet:
         w1 = np.where(sigma == 0.) ; sigma[w1] = np.nan
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
+
 
 #----------------------------------------------------       
 Mercury = Planet()        
@@ -164,7 +244,7 @@ Earth.Lequinox = None #Longitude of equinox (deg)
 Earth.Tsbar = 288. #Mean surface temperature
 Earth.Tsmax = None #Maximum surface temperature
 #
-Earth.R = Rstarkilo/28.8
+Earth.M = 28.8
 Earth.cp = 1004.
 #
 Earth.T0 = 273.
@@ -186,6 +266,11 @@ Mars.Lequinox = None #Longitude of equinox (deg)
 #
 Mars.Tsbar = 210. #Mean surface temperature
 Mars.Tsmax = 295. #Maximum surface temperature
+#
+Mars.M = 43.34
+Mars.cp = 844.
+#
+Mars.T0 = 250.
 
 #----------------------------------------------------        
 Jupiter = Planet()
@@ -207,26 +292,7 @@ Jupiter.Tsmax = None #Maximum surface temperature
 
 #----------------------------------------------------        
 Saturn = Planet()
-Saturn.name = 'Saturn' #Name of the planet
-Saturn.a = 58.232e6 #Mean radius of planet
-Saturn.g = 10.44 #Surface gravitational acceleration
-Saturn.albedo = .342 #Bond albedo
-Saturn.L = 14.90 #Annual mean solar constant (current)
-#
-Saturn.rsm = 1433.e9 #Semi-major axis
-Saturn.year = 10759.*24.*3600. #Sidereal length of year
-Saturn.eccentricity = .0565 # Eccentricity
-Saturn.day = 10.656*3600. #Mean tropical length of day
-Saturn.obliquity = 26.73 #Obliquity to orbit (deg)
-Saturn.Lequinox = None #Longitude of equinox (deg)
-#
-Saturn.Tsbar = 134. #Mean surface temperature
-Saturn.Tsmax = None #Maximum surface temperature
-#
-Saturn.R = Rstarkilo/2.07
-Saturn.cp = 11500.
-#
-Saturn.T0 = 120.
+Saturn.ini("Saturn")
 
 #----------------------------------------------------        
 Uranus = Planet()
