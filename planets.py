@@ -189,6 +189,17 @@ class Planet:
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
 
+#----------------------------------------------------        
+Earth = Planet()
+Earth.ini("Earth")
+
+#----------------------------------------------------        
+Mars = Planet()
+Mars.ini("Mars")
+
+#----------------------------------------------------        
+Saturn = Planet()
+Saturn.ini("Saturn")
 
 #----------------------------------------------------       
 Mercury = Planet()        
@@ -227,52 +238,6 @@ Venus.Tsbar = 737. #Mean surface temperature
 Venus.Tsmax = 737. #Maximum surface temperature
 
 #----------------------------------------------------        
-Earth = Planet()
-Earth.name = 'Earth' #Name of the planet
-Earth.a = 6.371e6 #Mean radius of planet
-Earth.g = 9.798 #Surface gravitational acceleration
-Earth.albedo = .306 #Bond albedo
-Earth.L = 1367.6 #Annual mean solar constant (current)
-#
-Earth.rsm = 149.60e9 #Semi-major axis
-Earth.year = 365.256*24.*3600. #Sidereal length of year
-Earth.eccentricity = .0167 # Eccentricity
-Earth.day = 24.000*3600. #Mean tropical length of day
-Earth.obliquity = 23.45 #Obliquity to orbit (deg)
-Earth.Lequinox = None #Longitude of equinox (deg)
-#
-Earth.Tsbar = 288. #Mean surface temperature
-Earth.Tsmax = None #Maximum surface temperature
-#
-Earth.M = 28.8
-Earth.cp = 1004.
-#
-Earth.T0 = 273.
-
-#----------------------------------------------------        
-Mars = Planet()
-Mars.name = 'Mars' #Name of the planet
-Mars.a = 3.390e6 #Mean radius of planet
-Mars.g = 3.71 #Surface gravitational acceleration
-Mars.albedo = .250 #Bond albedo
-Mars.L = 589.2 #Annual mean solar constant (current)
-#
-Mars.rsm = 227.92e9 #Semi-major axis
-Mars.year = 686.98*24.*3600. #Sidereal length of year
-Mars.eccentricity = .0935 # Eccentricity
-Mars.day = 24.6597*3600. #Mean tropical length of day
-Mars.obliquity = 25.19 #Obliquity to orbit (deg)
-Mars.Lequinox = None #Longitude of equinox (deg)
-#
-Mars.Tsbar = 210. #Mean surface temperature
-Mars.Tsmax = 295. #Maximum surface temperature
-#
-Mars.M = 43.34
-Mars.cp = 844.
-#
-Mars.T0 = 250.
-
-#----------------------------------------------------        
 Jupiter = Planet()
 Jupiter.name = 'Jupiter' #Name of the planet
 Jupiter.a = 69.911e6 #Mean radius of planet
@@ -289,10 +254,6 @@ Jupiter.Lequinox = None #Longitude of equinox (deg)
 #
 Jupiter.Tsbar = 165. #Mean surface temperature
 Jupiter.Tsmax = None #Maximum surface temperature
-
-#----------------------------------------------------        
-Saturn = Planet()
-Saturn.ini("Saturn")
 
 #----------------------------------------------------        
 Uranus = Planet()

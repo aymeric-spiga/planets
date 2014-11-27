@@ -1,0 +1,45 @@
+# Mean radius of planet
+a = 6.371e6 
+
+# Surface gravitational acceleration
+g = 9.798 
+
+# Bond albedo
+albedo = .306
+
+# Annual mean solar constant (current)
+L = 1367.6 
+
+# Semi-major axis
+rsm = 149.60e9
+
+# Sidereal length of year (earth days)
+year = 365.256 
+
+# Eccentricity
+eccentricity = .0167 
+
+# Mean tropical length of day (earth hours)
+day = 24. 
+
+# Obliquity to orbit (deg)
+obliquity = 23.45
+
+# Longitude of equinox (deg)
+Lequinox = None 
+
+# Mean surface temperature
+Tsbar = 288. 
+
+# Maximum surface temperature
+Tsmax = None 
+
+# Molecular weight (g per mol)
+M = 28.8
+
+# Specific heat capacity (J per kg per K)
+cp = 1004.
+
+# Typical atmospheric temperature
+T0 = 273.
+
