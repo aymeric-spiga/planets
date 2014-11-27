@@ -104,7 +104,7 @@ class Planet:
     def ini(self,name):
         # either have the file "name.txt" in /planet
         # ... or have it where you call
-        string = "planetoplot"
+        string = "planets"
         whereset = "./"
         for path in os.environ['PYTHONPATH'].split(os.pathsep):
           if string in path: whereset = path + "/planet"

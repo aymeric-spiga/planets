@@ -34,7 +34,7 @@ Tsbar = 134.
 # Maximum surface temperature
 Tsmax = None 
 
-# Molecular mass (g per mol)
+# Molecular weight (g per mol)
 M = 2.07
 
 # Specific heat capacity (J per kg per K)
