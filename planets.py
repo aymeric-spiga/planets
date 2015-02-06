@@ -201,6 +201,11 @@ Mars.ini("Mars")
 Saturn = Planet()
 Saturn.ini("Saturn")
 
+#----------------------------------------------------
+Venus = Planet()
+Venus.ini("Venus")
+
+
 #----------------------------------------------------       
 Mercury = Planet()        
 Mercury.name = 'Mercury' #Name of the planet
@@ -218,24 +223,6 @@ Mercury.Lequinox = None #Longitude of equinox (deg)
 #
 Mercury.Tsbar = 440. #Mean surface temperature
 Mercury.Tsmax = 725. #Maximum surface temperature
-
-#----------------------------------------------------        
-Venus = Planet()
-Venus.name = 'Venus' #Name of the planet
-Venus.a = 6.0518e6 #Mean radius of planet
-Venus.g = 8.87 #Surface gravitational acceleration
-Venus.albedo = .750 #Bond albedo
-Venus.L = 2613.9 #Annual mean solar constant (current)
-#
-Venus.rsm = 108.21e9 #Semi-major axis
-Venus.year = 224.701*24.*3600. #Sidereal length of year
-Venus.eccentricity = .0067 # Eccentricity
-Venus.day = 2802.*3600. #Mean tropical length of day
-Venus.obliquity = 177.36 #Obliquity to orbit (deg)
-Venus.Lequinox = None #Longitude of equinox (deg)
-#
-Venus.Tsbar = 737. #Mean surface temperature
-Venus.Tsmax = 737. #Maximum surface temperature
 
 #----------------------------------------------------        
 Jupiter = Planet()
