@@ -191,20 +191,15 @@ class Planet:
         return func
 
 #----------------------------------------------------        
-Earth = Planet()
-Earth.ini("Earth")
-
+Earth = Planet() ; Earth.ini("Earth")
 #----------------------------------------------------        
-Mars = Planet()
-Mars.ini("Mars")
-
+Mars = Planet() ; Mars.ini("Mars")
 #----------------------------------------------------        
-Saturn = Planet()
-Saturn.ini("Saturn")
-
+Saturn = Planet() ; Saturn.ini("Saturn")
 #----------------------------------------------------
-Venus = Planet()
-Venus.ini("Venus")
+Venus = Planet() ; Venus.ini("Venus")
+#----------------------------------------------------
+Jupiter = Planet() ; Jupiter.ini("Jupiter")
 
 
 #----------------------------------------------------       
@@ -225,23 +220,6 @@ Mercury.Lequinox = None #Longitude of equinox (deg)
 Mercury.Tsbar = 440. #Mean surface temperature
 Mercury.Tsmax = 725. #Maximum surface temperature
 
-#----------------------------------------------------        
-Jupiter = Planet()
-Jupiter.name = 'Jupiter' #Name of the planet
-Jupiter.a = 69.911e6 #Mean radius of planet
-Jupiter.g = 24.79 #Surface gravitational acceleration
-Jupiter.albedo = .343 #Bond albedo
-Jupiter.L = 50.5 #Annual mean solar constant (current)
-#
-Jupiter.rsm = 778.57e9 #Semi-major axis
-Jupiter.year = 4332.*24.*3600. #Sidereal length of year
-Jupiter.eccentricity = .0489 # Eccentricity
-Jupiter.day = 9.9259*3600. #Mean tropical length of day
-Jupiter.obliquity = 3.13 #Obliquity to orbit (deg)
-Jupiter.Lequinox = None #Longitude of equinox (deg)
-#
-Jupiter.Tsbar = 165. #Mean surface temperature
-Jupiter.Tsmax = None #Maximum surface temperature
 
 #----------------------------------------------------        
 Uranus = Planet()
