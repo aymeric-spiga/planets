@@ -25,7 +25,7 @@ G = 6.67428e-11        #Gravitational constant (2006 measurements)
 N_avogadro = 6.022136736e23  #Avogadro's number
 Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
 
-
+############################################################
 desc = {}
 desc["a"] = "Mean radius of planet (m)"
 desc["g"] = "Surface gravitational acceleration (m/s**2)"
@@ -43,6 +43,7 @@ desc["name"] = "Name of the planet"
 desc["M"] = "Molecular weight (g/mol)"
 desc["T0"] = "Typical atmospheric temperature (K)" 
 desc["cp"] = "Specific heat capacity (J kg-1 K-1)"
+#############################################################
 
 class Planet:
     '''

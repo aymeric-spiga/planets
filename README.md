@@ -1,4 +1,6 @@
 planets
 =======
 
-planetary constants and useful computations
+planetary constants 
+-- and useful associated computations
+
