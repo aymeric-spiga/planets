@@ -258,25 +258,6 @@ Neptune.Lequinox = None #Longitude of equinox (deg)
 Neptune.Tsbar = 72. #Mean surface temperature
 Neptune.Tsmax = None #Maximum surface temperature
 
-#----------------------------------------------------        
-Pluto = Planet()
-Pluto.name = 'Pluto' #Name of the planet
-Pluto.a = 1.195e6 #Mean radius of planet
-Pluto.g = .58 #Surface gravitational acceleration
-Pluto.albedo = .5 #Bond albedo
-Pluto.L = .89 #Annual mean solar constant (current)
-#
-Pluto.rsm = 5906.e9 #Semi-major axis
-Pluto.year = 90465.*24.*3600. #Sidereal length of year
-Pluto.eccentricity = .2488 # Eccentricity
-Pluto.day = 153.2820*3600. #Mean tropical length of day
-Pluto.obliquity = 122.53 #Obliquity to orbit (deg)
-Pluto.Lequinox = None #Longitude of equinox (deg)
-#
-Pluto.Tsbar = 50. #Mean surface temperature
-Pluto.Tsmax = None #Maximum surface temperature
-
-
 
 #Selected moons
 
