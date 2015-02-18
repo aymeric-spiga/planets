@@ -17,7 +17,7 @@ rsm = 227.92e9
 year = 686.98 
 
 # Eccentricity
-eccentricity = .0935
+eccentricity = .0934
 
 # Mean tropical length of day (earth hours)
 day = 24.6597 
@@ -43,3 +43,17 @@ cp = 844.
 # Typical atmospheric temperature
 T0 = 250.
 
+# Orbit inclination (deg)
+incl=1.85061
+
+# Longitude of ascending node (deg)
+ascend=49.57854 
+
+# Argument of periapsis (deg)
+omeg=336.04084
+
+# date periapsis 
+date_peri=20130124
+
+# date equinox 
+date_equi=20130731

@@ -43,3 +43,17 @@ cp = 11500.
 # Typical atmospheric temperature
 T0 = 120.
 
+# Orbit inclination (deg)
+incl=2.48446
+
+# Longitude of ascending node (deg)
+ascend=113.71504 
+
+# Argument of periapsis (deg)
+omeg=92.43194
+
+# date periapsis 
+date_peri=20030726
+
+# date equinox 
+date_equi=20090811
