@@ -15,15 +15,17 @@ import numpy as np
 #
 h = 6.626075540e-34    #Planck's constant
 c = 2.99792458e8       #Speed of light
-k =1.38065812e-23      #Boltzman thermodynamic constant
+k = 1.38065812e-23      #Boltzman thermodynamic constant
 sigma = 5.67051196e-8  #Stefan-Boltzman constant
 G = 6.67428e-11        #Gravitational constant (2006 measurements)
-#-----------Thermodynamic constants------------
+#-----------Thermodynamic constants----------------------
 #Following will come out in J/(deg kmol), so
 #that dividing Rstar by molecular weight gives
 #gas constant appropriate for mks units
 N_avogadro = 6.022136736e23  #Avogadro's number
 Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
+#-------------Useful planetary quantities----------------
+AU = 149597871000       # astronomical unit in meters
 
 ############################################################
 desc = {}
@@ -43,6 +45,11 @@ desc["name"] = "Name of the planet"
 desc["M"] = "Molecular weight (g/mol)"
 desc["T0"] = "Typical atmospheric temperature (K)" 
 desc["cp"] = "Specific heat capacity (J kg-1 K-1)"
+desc["incl"] = "Orbit inclination (deg)"
+desc["ascend"] = "Longitude of ascending node (deg)"
+desc["omeg"] = "Argument of periapsis (deg)"
+desc["date_peri"] = "Date of perihelion"
+desc["date_equi"] = "Date of equinox"
 #############################################################
 
 class Planet:
@@ -88,6 +95,13 @@ class Planet:
 
         self.T0 = None #typical atm temperature
 
+        self.incl = None #orbit inclination
+        self.ascend = None #longitude ascending node
+        self.omeg = None #argument of periapsis
+
+        self.date_peri = None #date perihelion
+        self.date_equi = None #date equinoxe
+
 ############################################
 ### USEFUL METHODS FOR VALUES
 ############################################
@@ -126,8 +140,8 @@ class Planet:
         # fill in object's attributes
         for k, v in vars(self).items():
           if k != "name":
-            getval = cstplan[k]
             try:
+              getval = cstplan[k]
               v = np.float(getval)
             except:
               #print k + " no value in file, set to None"
