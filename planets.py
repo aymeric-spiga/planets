@@ -214,6 +214,8 @@ Saturn = Planet() ; Saturn.ini("Saturn")
 Venus = Planet() ; Venus.ini("Venus")
 #----------------------------------------------------
 Jupiter = Planet() ; Jupiter.ini("Jupiter")
+#----------------------------------------------------
+Pluto = Planet() ; Pluto.ini("Pluto")
 
 
 #----------------------------------------------------       
