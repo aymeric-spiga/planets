@@ -3,7 +3,7 @@
 
 import os
 import numpy as np
-
+from datetime import datetime
 
 #Planetary database
 #Source for planetary data, and some of the data on
@@ -116,6 +116,13 @@ class Planet:
         self.year = self.year*24.*3600.
         self.day = self.day*3600.
 
+    def convdate(self):
+        # convert date peri and date equi in date format
+        if self.date_peri is not None:
+            self.date_peri = datetime.strptime(str(int(self.date_peri)), '%Y%m%d')
+        if self.date_equi is not None:
+            self.date_equi = datetime.strptime(str(int(self.date_equi)), '%Y%m%d')
+
     def ini(self,name):
         # either have the file "name.txt" in /planet
         # ... or have it where you call
@@ -149,6 +156,7 @@ class Planet:
             setattr(self,k,v)
         # do necessary converting
         self.convsecond()
+        self.convdate()
 
 ############################################
 ### PHYSICAL CALCULATIONS as METHODS
