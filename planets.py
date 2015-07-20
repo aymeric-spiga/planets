@@ -171,6 +171,9 @@ class Planet:
     def omega(self): return 2.*np.pi/self.day
         # planetary rotation rate
 
+    def fcoriolis(self,lat=45.): return 2.*self.omega()*np.sin(lat*np.pi/180.)
+        ## Coriolis parameter
+
     def eqtemp(self): 
         # calculate equivalent temperature
         num = (1.-self.albedo)*self.L
