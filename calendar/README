@@ -1,0 +1,19 @@
+planetool is the main file
+it uses:
+- planetcalendar.py to create a calendar 
+- orbit2D.py to create a figure with the orbits (orbit3D also exists)
+
+You need to have the planets package installed to use this routine
+https://github.com/aymeric-spiga/planets
+ 
+In planetool you only have to choose :
+- if you want to create a calendar, a figure of orbits or both (on/off)
+- if calendar is selected : 
+     --> date of departure
+     --> date of arrival
+     --> timestep in Earth days 
+
+At the end of the planetcalendar.py routine, you can add different plots.
+An example is given, with the ecolution of declination with time
+
+
