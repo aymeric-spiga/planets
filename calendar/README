@@ -14,6 +14,18 @@ In planetool you only have to choose :
      --> timestep in Earth days 
 
 At the end of the planetcalendar.py routine, you can add different plots.
-An example is given, with the ecolution of declination with time
+An example is given, with the evolution of declination with time
 
+Example of use :
+- open planetool
+- add your planet : 
+      myplanet1=planets.Saturn
+- select your calendar options : departure date, final date, day step
+      date11=datetime(2000, 1, 1, 00, 00, 00)
+      date12=datetime(2010, 2, 7, 00, 00, 00)
+      day_step1 = 1   # step for calendar in Earth days
+- make sure to call the calendar routine :
+      cal(myplanet1,date11,date12,day_step1)
+
+- run planetool : ./planetool 
 
