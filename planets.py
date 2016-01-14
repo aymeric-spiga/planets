@@ -88,8 +88,10 @@ class Planet:
 
     def convsecond(self):
         # convert earth days and hours in seconds
-        self.year = self.year*24.*3600.
-        self.day = self.day*3600.
+        if self.year is not None:
+            self.year = self.year*24.*3600.
+        if self.day is not None:
+            self.day = self.day*3600.
 
     def convdate(self):
         # convert date peri and date equi in date format
