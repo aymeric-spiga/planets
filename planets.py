@@ -29,6 +29,9 @@ astrunit = 149597871000.       # astronomical unit in meters
 
 desc = {}
 
+# convert from deg to rad
+def deg_to_rad(angles): return angles*np.pi/180.
+
 class Planet:
     '''
     A Planet object contains basic planetary data.
@@ -153,9 +156,6 @@ class Planet:
     def dryadiab(self): return self.dryadiab
     def omega(self): return self.omega
     # retro-compatibility
-
-    # convert from deg to rad
-    def deg_to_rad(angles): return angles*np.pi/180.
 
     # Coriolis parameter
     def fcoriolis(self,lat=45.): return 2.*self.omega()*np.sin(deg_to_rad(lat))
