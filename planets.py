@@ -194,13 +194,17 @@ class Planet:
         w1 = np.where(sigma == 0.) ; sigma[w1] = np.nan
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
+    
+    # acosphi (pretty self-explanatory)
+    def acosphi(self,lat):
+        return self.a * np.cos(deg_to_rad(lat))
 
     # specific axial angular momentum
     # [= omega * a**2 if neither u, nor lat, is provided]
     def angmom(self,u=None,lat=None):
         if lat is None: lat=0.
         if u is None: u=0.
-        acosphi = self.a * np.cos(deg_to_rad(lat))
+        acosphi = self.acosphi(lat)
         return acosphi*((self.omega*acosphi)+u)
 
     # local superotation index
