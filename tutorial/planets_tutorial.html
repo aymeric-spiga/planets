@@ -1876,22 +1876,30 @@ In&nbsp;[5]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-a 6051800.0 Mean radius of planet (m)
-rsm 1.0821e+11 Semi-major axis of orbit about Sun (m)
-name Venus Name of the planet
-g 8.87 Surface gravitational acceleration (m/s**2)
-M 43.34 Molecular weight (g/mol)
-L 2613.9 Annual mean solar constant (current) (W/m**2)
-T0 300.0 Typical atmospheric temperature (K)
-day 10087200.0 Mean tropical length of day (s)
-Tsbar 737.0 Mean surface temperature (K)
+dryadiab 0.00985555555556 dry adiabatic lapse rate
+ascend 76.68069 Longitude of ascending node (deg)
 obliquity 177.36 Obliquity to orbit (degrees)
 year 19414166.4 Sidereal length of year (s)
-eccentricity 0.0067 Eccentricity (unitless)
 cp 900.0 Specific heat capacity (J kg-1 K-1)
 albedo 0.75 Bond albedo (fraction)
 Tsmax 737.0 Maximum surface temperature (K)
+date_peri 2014-09-05 00:00:00 Date of perihelion
+incl 3.39471 Orbit inclination (deg)
+rsm 1.0821e+11 Semi-major axis of orbit about Sun (m)
+M 43.34 Molecular weight (g/mol)
+L 2613.9 Annual mean solar constant (current) (W/m**2)
+T0 300.0 Typical atmospheric temperature (K)
+Tsbar 737.0 Mean surface temperature (K)
+eccentricity 0.0067 Eccentricity (unitless)
+date_equi 2014-08-02 00:00:00 Date of equinox
+omega 6.22886956458e-07 planetary rotation rate
+day 10087200.0 Mean tropical length of day (s)
 Lequinox None Longitude of equinox (degrees)
+a 6051800.0 Mean radius of planet (m)
+name Venus Name of the planet
+g 8.87 Surface gravitational acceleration (m/s**2)
+omeg 131.53298 Argument of periapsis (deg)
+R 191.843839047 planetary gas constant
 
 </pre>
 </div>
@@ -2121,14 +2129,11 @@ In&nbsp;[10]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[12]:
+In&nbsp;[11]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">R</span><span class="p">()</span> <span class="c"># planetary gas constant</span>
-<span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">dryadiab</span><span class="p">()</span> <span class="c"># adiabatic lapse rate</span>
-<span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">omega</span><span class="p">()</span> <span class="c"># planetary rotation rate</span>
-<span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">H</span><span class="p">()</span> <span class="c"># atmospheric scale height</span>
+<div class="highlight"><pre><span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">H</span><span class="p">()</span> <span class="c"># atmospheric scale height</span>
 <span class="k">print</span> <span class="n">myplanet</span><span class="o">.</span><span class="n">N2</span><span class="p">()</span> <span class="c"># Brunt-Väisälä frequency</span>
 </pre></div>
 
@@ -2143,9 +2148,6 @@ In&nbsp;[12]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-191.843839047
-0.00985555555556
-6.22886956458e-07
 6488.51766789
 0.000291395925926
 
@@ -2162,14 +2164,14 @@ In&nbsp;[12]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The last two have additional arguments. For instance you can change the temperature (in Kelvin) for the atmospheric scale height</p>
+<p>Those methods have additional arguments. For instance you can change the temperature (in Kelvin) for the atmospheric scale height</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[13]:
+In&nbsp;[14]:
 </div>
 <div class="inner_cell">
     <div class="input_area">

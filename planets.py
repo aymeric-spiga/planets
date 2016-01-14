@@ -151,12 +151,6 @@ class Planet:
 ### PHYSICAL CALCULATIONS as METHODS
 ############################################
 
-    # retro-compatibility
-    def R(self): return self.R
-    def dryadiab(self): return self.dryadiab
-    def omega(self): return self.omega
-    # retro-compatibility
-
     # Coriolis parameter
     def fcoriolis(self,lat=45.): return 2.*self.omega()*np.sin(deg_to_rad(lat))
 
@@ -172,18 +166,17 @@ class Planet:
     def N2(self,T0=None,dTdz=None):
         if T0 is None: T0=self.T0
         if dTdz is None: dTdz=0.
-        return (self.g / T0) * ( self.dryadiab() + dTdz )
+        return (self.g / T0) * ( self.dryadiab + dTdz )
 
     # calculate scale height
     def H(self,T0=None):
         if T0 is None: T0=self.T0
-        out = self.R() * T0 / self.g
-        return out
+        return self.R * T0 / self.g
 
     # planetary waves dispersion relationship
     def dispeqw(self,s,sigma,nu=0,lz=None,h=None,N2=None):
         a = self.a
-        omega = self.omega()
+        omega = self.omega
         g = self.g
         H = self.H()
         if N2 is None:
@@ -202,12 +195,21 @@ class Planet:
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
 
-    # angular momentum
+    # specific axial angular momentum
+    # [= omega * a**2 if neither u, nor lat, is provided]
     def angmom(self,u=None,lat=None):
         if lat is None: lat=0.
         if u is None: u=0.
         acosphi = self.a * np.cos(deg_to_rad(lat))
         return acosphi*((self.omega*acosphi)+u)
+
+    # local superotation index
+    # -- excess local a.m. over u(equator) = 0
+    # -- solid-body rotation: s = -1 (poles) to 0 (equator)
+    # -- s>0 eddy forcing and transport of aam
+    def superrot(self,u=None,lat=None):
+        aam_norm = self.angmom(u=u,lat=lat) / self.angmom()
+        return aam_norm-1.
 
 
 #----------------------------------------------------        
