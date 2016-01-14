@@ -202,6 +202,14 @@ class Planet:
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
 
+    # angular momentum
+    def angmom(self,u=None,lat=None):
+        if lat is None: lat=0.
+        if u is None: u=0.
+        acosphi = self.a * np.cos(deg_to_rad(lat))
+        return acosphi*((self.omega*acosphi)+u)
+
+
 #----------------------------------------------------        
 Earth = Planet() ; Earth.ini("Earth")
 #----------------------------------------------------        
