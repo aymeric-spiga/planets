@@ -25,7 +25,7 @@ G = 6.67428e-11        #Gravitational constant (2006 measurements)
 N_avogadro = 6.022136736e23  #Avogadro's number
 Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
 #-------------Useful planetary quantities----------------
-AU = 149597871000       # astronomical unit in meters
+astrunit = 149597871000.       # astronomical unit in meters
 
 ############################################################
 desc = {}
