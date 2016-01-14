@@ -199,6 +199,13 @@ class Planet:
     def acosphi(self,lat):
         return self.a * np.cos(deg_to_rad(lat))
 
+    # length of a degree of latitude / longitude (meters)
+    # -- latitude if lat is not provided (or longitude@equator)
+    # -- longitude if lat is provided
+    def deglength(self,lat=None):
+        if lat is None: lat=0.
+        return np.cos(deg_to_rad(lat))*self.a*np.pi/180.
+
     # specific axial angular momentum
     # [= omega * a**2 if neither u, nor lat, is provided]
     def angmom(self,u=None,lat=None):
@@ -214,6 +221,7 @@ class Planet:
     def superrot(self,u=None,lat=None):
         aam_norm = self.angmom(u=u,lat=lat) / self.angmom()
         return aam_norm-1.
+
 
 
 #----------------------------------------------------        
