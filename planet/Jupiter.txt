@@ -41,7 +41,7 @@ M = 2.22
 cp = 12619.
 
 # Typical atmospheric temperature
-T0 = None
+T0 = 140.
 
 # Orbit inclination (deg)
 incl=1.30530
