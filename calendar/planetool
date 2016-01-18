@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+from    numpy                 import    *
+import  numpy                 as        np
+import  matplotlib.pyplot     as        mpl
+import  math
+import  pylab
+import datetime,time
+from time import sleep
+import sys
+from datetime import datetime, timedelta
+import planets
+from planetcalendar import main as cal
+from orbit2D import main as orbit
+
+pi=math.pi
+
+# Choice Planet (order counts)
+myplanet1=planets.Venus
+myplanet2=planets.Mars
+
+orbits='off'
+calendar='on'
+
+##### CALENDAR
+# Choice Calendar dates and step: 
+
+date11=datetime(2000, 1, 1, 00, 00, 00)
+date12=datetime(2010, 2, 7, 00, 00, 00) 
+day_step1 = 1   # step for calendar in Earth days
+
+date21=datetime(2000, 1, 1, 00, 00, 00)
+date22=datetime(2010, 2, 7, 00, 00, 00) 
+day_step2 = 5   # step for calendar in Earth days
+
+if calendar=='on':
+   cal(myplanet1,date11,date12,day_step1)
+   cal(myplanet2,date21,date22,day_step2)
+
+##### PLOTS
+if orbits=='on':
+   col=['black','red','orange','green','blue','magenta','cyan','yellow']
+   planetes=[myplanet1,myplanet2]
+   nbplanet=size(planetes)
+   orbit(nbplanet,planetes,col)
+
+
+
+
+

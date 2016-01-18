@@ -102,18 +102,15 @@ print planets.Saturn.eqtemp()
 
 # New methods are often added to `planets`. Check for the source for this. Other examples of methods available at the time of writing are
 
-# In[12]:
+# In[11]:
 
-print myplanet.R() # planetary gas constant
-print myplanet.dryadiab() # adiabatic lapse rate
-print myplanet.omega() # planetary rotation rate
 print myplanet.H() # atmospheric scale height
 print myplanet.N2() # Brunt-Väisälä frequency
 
 
-# The last two have additional arguments. For instance you can change the temperature (in Kelvin) for the atmospheric scale height
+# Those methods have additional arguments. For instance you can change the temperature (in Kelvin) for the atmospheric scale height
 
-# In[13]:
+# In[14]:
 
 print myplanet.H(T0=273.)
 

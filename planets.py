@@ -25,38 +25,18 @@ G = 6.67428e-11        #Gravitational constant (2006 measurements)
 N_avogadro = 6.022136736e23  #Avogadro's number
 Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
 #-------------Useful planetary quantities----------------
-AU = 149597871000       # astronomical unit in meters
+astrunit = 149597871000.       # astronomical unit in meters
 
-############################################################
 desc = {}
-desc["a"] = "Mean radius of planet (m)"
-desc["g"] = "Surface gravitational acceleration (m/s**2)"
-desc["L"] = "Annual mean solar constant (current) (W/m**2)"
-desc["albedo"] = "Bond albedo (fraction)"
-desc["rsm"] = "Semi-major axis of orbit about Sun (m)"
-desc["year"] = "Sidereal length of year (s)"
-desc["eccentricity"] = "Eccentricity (unitless)"
-desc["day"] = "Mean tropical length of day (s)"
-desc["obliquity"] = "Obliquity to orbit (degrees)"
-desc["Lequinox"] = "Longitude of equinox (degrees)"
-desc["Tsbar"] = "Mean surface temperature (K)"
-desc["Tsmax"] = "Maximum surface temperature (K)"
-desc["name"] = "Name of the planet"
-desc["M"] = "Molecular weight (g/mol)"
-desc["T0"] = "Typical atmospheric temperature (K)" 
-desc["cp"] = "Specific heat capacity (J kg-1 K-1)"
-desc["incl"] = "Orbit inclination (deg)"
-desc["ascend"] = "Longitude of ascending node (deg)"
-desc["omeg"] = "Argument of periapsis (deg)"
-desc["date_peri"] = "Date of perihelion"
-desc["date_equi"] = "Date of equinox"
-#############################################################
+
+# convert from deg to rad
+def deg_to_rad(angles): return angles*np.pi/180.
 
 class Planet:
     '''
     A Planet object contains basic planetary data.
    
-    "print planets.desc" for information
+    "print Planet.desc" for information
 
     For gas giants, "surface" quantities are given at the 1 bar level
     '''
@@ -74,33 +54,31 @@ class Planet:
         return line1+line2
 
     def __init__(self):
-        self.name = None #Name of the planet
-        self.a = None #Mean radius of planet
-        self.g = None #Surface gravitational acceleration
-        self.L = None #Annual mean solar constant (current)
-        self.albedo = None #Bond albedo
-        
-        self.rsm = None #Semi-major axis
-        self.year = None #Sidereal length of year
-        self.eccentricity = None # Eccentricity
-        self.day = None #Mean tropical length of day
-        self.obliquity = None #Obliquity to orbit
-        self.Lequinox = None #Longitude of equinox
-
-        self.Tsbar = None #Mean surface temperature
-        self.Tsmax = None #Maximum surface temperature
-
-        self.M = None #molar mass in grams per mol
-        self.cp = None #specific heat capacity
-
-        self.T0 = None #typical atm temperature
-
-        self.incl = None #orbit inclination
-        self.ascend = None #longitude ascending node
-        self.omeg = None #argument of periapsis
-
-        self.date_peri = None #date perihelion
-        self.date_equi = None #date equinoxe
+        self.name = None ; desc["name"] = "Name of the planet"
+        self.a = None ; desc["a"] = "Mean radius of planet (m)"
+        self.g = None ; desc["g"] = "Surface gravitational acceleration (m/s**2)"
+        self.L = None ; desc["L"] = "Annual mean solar constant (current) (W/m**2)"
+        self.albedo = None ; desc["albedo"] = "Bond albedo (fraction)"
+        self.rsm = None ; desc["rsm"] = "Semi-major axis of orbit about Sun (m)"
+        self.year = None ; desc["year"] = "Sidereal length of year (s)"
+        self.eccentricity = None ; desc["eccentricity"] = "Eccentricity (unitless)"
+        self.day = None ; desc["day"] = "Mean tropical length of day (s)"
+        self.obliquity = None ; desc["obliquity"] = "Obliquity to orbit (degrees)"
+        self.Lequinox = None ; desc["Lequinox"] = "Longitude of equinox (degrees)"
+        self.Tsbar = None ; desc["Tsbar"] = "Mean surface temperature (K)"
+        self.Tsmax = None ; desc["Tsmax"] = "Maximum surface temperature (K)"
+        self.M = None ; desc["M"] = "Molecular weight (g/mol)"
+        self.cp = None ; desc["cp"] = "Specific heat capacity (J kg-1 K-1)"
+        self.T0 = None ; desc["T0"] = "Typical atmospheric temperature (K)"
+        self.incl = None ; desc["incl"] = "Orbit inclination (deg)"
+        self.ascend = None ; desc["ascend"] = "Longitude of ascending node (deg)"
+        self.omeg = None ; desc["omeg"] = "Argument of periapsis (deg)"
+        self.date_peri = None ; desc["date_peri"] = "Date of perihelion"
+        self.date_equi = None ; desc["date_equi"] = "Date of equinox"
+        ## calculated
+        self.R = None ; desc["R"] = "planetary gas constant"
+        self.dryadiab = None ; desc["dryadiab"] = "dry adiabatic lapse rate"
+        self.omega = None ; desc["omega"] = "planetary rotation rate"
 
 ############################################
 ### USEFUL METHODS FOR VALUES
@@ -113,8 +91,10 @@ class Planet:
 
     def convsecond(self):
         # convert earth days and hours in seconds
-        self.year = self.year*24.*3600.
-        self.day = self.day*3600.
+        if self.year is not None:
+            self.year = self.year*24.*3600.
+        if self.day is not None:
+            self.day = self.day*3600.
 
     def convdate(self):
         # convert date peri and date equi in date format
@@ -122,6 +102,14 @@ class Planet:
             self.date_peri = datetime.strptime(str(int(self.date_peri)), '%Y%m%d')
         if self.date_equi is not None:
             self.date_equi = datetime.strptime(str(int(self.date_equi)), '%Y%m%d')
+
+    def calculate(self):
+        # planetary gas constant
+        self.R = Rstarkilo/self.M 
+        # adiabatic lapse rate
+        self.dryadiab = self.g/self.cp
+        # planetary rotation rate
+        self.omega = 2.*np.pi/self.day
 
     def ini(self,name):
         # either have the file "name.txt" in /planet
@@ -157,43 +145,38 @@ class Planet:
         # do necessary converting
         self.convsecond()
         self.convdate()
+        self.calculate()
 
 ############################################
 ### PHYSICAL CALCULATIONS as METHODS
 ############################################
 
-    def R(self): return Rstarkilo/self.M
-        # planetary gas constant
+    # Coriolis parameter
+    def fcoriolis(self,lat=45.): return 2.*self.omega()*np.sin(deg_to_rad(lat))
 
-    def dryadiab(self): return self.g/self.cp
-        # adiabatic lapse rate
-
-    def omega(self): return 2.*np.pi/self.day
-        # planetary rotation rate
-
+    # calculate equivalent temperature
     def eqtemp(self): 
-        # calculate equivalent temperature
         num = (1.-self.albedo)*self.L
         den = 4.*sigma
         return (num/den)**0.25
 
+    # calculate Brunt-Vaisala frequency
+    # ex: planets.Earth.N2(dTdz=-6.5e-3)
+    # --> NB: dTdz could be an array
     def N2(self,T0=None,dTdz=None):
-        # calculate Brunt-Vaisala frequency
-        # ex: planets.Earth.N2(dTdz=-6.5e-3)
-        # --> NB: dTdz could be an array
         if T0 is None: T0=self.T0
         if dTdz is None: dTdz=0.
-        return (self.g / T0) * ( self.dryadiab() + dTdz )
+        return (self.g / T0) * ( self.dryadiab + dTdz )
 
+    # calculate scale height
     def H(self,T0=None):
-        # calculate scale height
         if T0 is None: T0=self.T0
-        out = self.R() * T0 / self.g
-        return out
+        return self.R * T0 / self.g
 
+    # planetary waves dispersion relationship
     def dispeqw(self,s,sigma,nu=0,lz=None,h=None,N2=None):
         a = self.a
-        omega = self.omega()
+        omega = self.omega
         g = self.g
         H = self.H()
         if N2 is None:
@@ -211,6 +194,35 @@ class Planet:
         w1 = np.where(sigma == 0.) ; sigma[w1] = np.nan
         func = gamma*(sigma**2) - s**2 - (s/sigma) - lhs
         return func
+    
+    # acosphi (pretty self-explanatory)
+    def acosphi(self,lat):
+        return self.a * np.cos(deg_to_rad(lat))
+
+    # length of a degree of latitude / longitude (meters)
+    # -- latitude if lat is not provided (or longitude@equator)
+    # -- longitude if lat is provided
+    def deglength(self,lat=None):
+        if lat is None: lat=0.
+        return np.cos(deg_to_rad(lat))*self.a*np.pi/180.
+
+    # specific axial angular momentum
+    # [= omega * a**2 if neither u, nor lat, is provided]
+    def angmom(self,u=None,lat=None):
+        if lat is None: lat=0.
+        if u is None: u=0.
+        acosphi = self.acosphi(lat)
+        return acosphi*((self.omega*acosphi)+u)
+
+    # local superotation index
+    # -- excess local a.m. over u(equator) = 0
+    # -- solid-body rotation: s = -1 (poles) to 0 (equator)
+    # -- s>0 eddy forcing and transport of aam
+    def superrot(self,u=None,lat=None):
+        aam_norm = self.angmom(u=u,lat=lat) / self.angmom()
+        return aam_norm-1.
+
+
 
 #----------------------------------------------------        
 Earth = Planet() ; Earth.ini("Earth")
