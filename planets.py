@@ -152,7 +152,7 @@ class Planet:
 ############################################
 
     # Coriolis parameter
-    def fcoriolis(self,lat=45.): return 2.*self.omega()*np.sin(deg_to_rad(lat))
+    def fcoriolis(self,lat=45.): return 2.*self.omega*np.sin(deg_to_rad(lat))
 
     # calculate equivalent temperature
     def eqtemp(self): 
@@ -196,8 +196,15 @@ class Planet:
         return func
     
     # acosphi (pretty self-explanatory)
+    # -- distance to axis of rotation
     def acosphi(self,lat):
         return self.a * np.cos(deg_to_rad(lat))
+
+    # beta (Rossby parameter)
+    # -- variation of f with latitude
+    def beta(self,lat=None):
+        if lat is None: lat=0.
+        return 2 * self.omega * np.cos(deg_to_rad(lat)) / self.a
 
     # length of a degree of latitude / longitude (meters)
     # -- latitude if lat is not provided (or longitude@equator)
