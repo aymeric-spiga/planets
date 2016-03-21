@@ -229,7 +229,15 @@ class Planet:
         aam_norm = self.angmom(u=u,lat=lat) / self.angmom()
         return aam_norm-1.
 
+    # Exner function
+    # -- default p0 is 1 bar (as on Earth)
+    # -- should be defining p0 in planetary constants?
+    def exner(self,p,p0=1.e5):
+        return (p/p0)**(self.R/self.cp)
 
+    # potential temperature
+    def tpot(self,temp,p,p0=1.e5):
+        return temp/self.exner(p,p0=p0)
 
 #----------------------------------------------------        
 Earth = Planet() ; Earth.ini("Earth")
