@@ -173,6 +173,12 @@ class Planet:
         if T0 is None: T0=self.T0
         return self.R * T0 / self.g
 
+    # calculate pseudo-altitude (log-pressure coordinates)
+    def pseudoz(self,pressure,H=None,p0=None):
+        if H is None: H=self.H()
+        if p0 is None: p0=1.e5
+        return H*np.log(p0/pressure)
+
     # planetary waves dispersion relationship
     def dispeqw(self,s,sigma,nu=0,lz=None,h=None,N2=None):
         a = self.a
