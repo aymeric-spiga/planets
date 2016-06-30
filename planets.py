@@ -105,9 +105,15 @@ class Planet:
 
     def calculate(self):
         # planetary gas constant
-        self.R = Rstarkilo/self.M 
+        if self.M is not None:
+          self.R = Rstarkilo/self.M 
+        else:
+          self.R = None
         # adiabatic lapse rate
-        self.dryadiab = self.g/self.cp
+        if self.cp is not None:
+          self.dryadiab = self.g/self.cp
+        else:
+          self.dryadiab = None
         # planetary rotation rate
         self.omega = 2.*np.pi/self.day
 
@@ -257,25 +263,10 @@ Venus = Planet() ; Venus.ini("Venus")
 Jupiter = Planet() ; Jupiter.ini("Jupiter")
 #----------------------------------------------------
 Pluto = Planet() ; Pluto.ini("Pluto")
+#----------------------------------------------------
+Mercury = Planet() ; Mercury.ini("Mercury")
 
 
-#----------------------------------------------------       
-Mercury = Planet()        
-Mercury.name = 'Mercury' #Name of the planet
-Mercury.a = 2.4397e6 #Mean radius of planet
-Mercury.g = 3.70 #Surface gravitational acceleration
-Mercury.albedo = .119 #Bond albedo
-Mercury.L = 9126.6 #Annual mean solar constant (current)
-#
-Mercury.rsm = 57.91e9 #Semi-major axis
-Mercury.year = 87.969*24.*3600. #Sidereal length of year
-Mercury.eccentricity = .2056 # Eccentricity
-Mercury.day = 4222.6*3600. #Mean tropical length of day
-Mercury.obliquity = .01 #Obliquity to orbit (deg)
-Mercury.Lequinox = None #Longitude of equinox (deg)
-#
-Mercury.Tsbar = 440. #Mean surface temperature
-Mercury.Tsmax = 725. #Maximum surface temperature
 
 
 #----------------------------------------------------        
