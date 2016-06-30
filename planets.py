@@ -1,37 +1,60 @@
 # modified by A. Spiga from files associated with R. Pierrehumbert's book
 # added the possibility to use method associated with planets objects
+# added the possibility to load a set of constants for a planet in a txt file
+# added many functions and computations, and constants taken from scipy
+# .... see tutorial
 
 import os
 import numpy as np
 from datetime import datetime
+import scipy.constants as cst
 
 #Planetary database
 #Source for planetary data, and some of the data on
 #the moons, is http://nssdc.gsfc.nasa.gov/planetary/factsheet/
 
 #-------------Basic physical constants-------------------
-#
-#The following five are the most accurate 1986 values 
-#
-h = 6.626075540e-34    #Planck's constant
-c = 2.99792458e8       #Speed of light
-k = 1.38065812e-23      #Boltzman thermodynamic constant
-sigma = 5.67051196e-8  #Stefan-Boltzman constant
-G = 6.67428e-11        #Gravitational constant (2006 measurements)
+G = cst.G          # Gravitational constant
+h = cst.h          # Planck's constant
+sigma = cst.sigma  # Stefan-Boltzman constant
+k = cst.k          # Boltzman thermodynamic constant
+c = cst.c          # Speed of light
 #-----------Thermodynamic constants----------------------
+Avogadro = cst.Avogadro  # Avogadro's number
 #Following will come out in J/(deg kmol), so
 #that dividing Rstar by molecular weight gives
 #gas constant appropriate for mks units
-N_avogadro = 6.022136736e23  #Avogadro's number
-Rstarkilo = 1000.*k*N_avogadro   #Universal gas constant
+Rstarkilo = 1000.*k*Avogadro   #Universal gas constant
 #-------------Useful planetary quantities----------------
-astrunit = 149597871000.       # astronomical unit in meters
+astronomical_unit = cst.astronomical_unit       # astronomical unit in meters
 
 desc = {}
 
+#####################################
 # convert from deg to rad
 def deg_to_rad(angles): return angles*np.pi/180.
 
+#####################################
+# Planck function B_nu(T) or B_lambda(T)
+# -- If lambda is given (in meters), the output units are W/(m^2 m)
+def planck(temp,spec,kind="lambda"):
+  if kind == "nu":
+    X = (spec**3)/(c**2)
+    Y = spec
+  elif kind == "lambda":
+    X = (c**2)/(spec**5)
+    Y = c / spec
+  print X
+  print Y
+  nnn = 2.*h*X
+  ddd = np.exp(h*Y/(k*temp))-1.
+  return nnn/ddd
+
+
+#####################################
+#####################################
+#####################################
+#####################################
 class Planet:
     '''
     A Planet object contains basic planetary data.
