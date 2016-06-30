@@ -1,6 +1,9 @@
 # Mean radius of planet
 a = 6.0518e6
 
+# Mass of the planet (kg)
+mass = 4.8685e24
+
 # Surface gravitational acceleration
 g = 8.87
 
