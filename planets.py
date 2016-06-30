@@ -79,6 +79,7 @@ class Planet:
     def __init__(self):
         self.name = None ; desc["name"] = "Name of the planet"
         self.a = None ; desc["a"] = "Mean radius of planet (m)"
+        self.mass = None ; desc["mass"] = "Mass of planet (kg)"
         self.g = None ; desc["g"] = "Surface gravitational acceleration (m/s**2)"
         self.L = None ; desc["L"] = "Annual mean solar constant (current) (W/m**2)"
         self.albedo = None ; desc["albedo"] = "Bond albedo (fraction)"
@@ -273,6 +274,31 @@ class Planet:
     # potential temperature
     def tpot(self,temp,p,p0=1.e5):
         return temp/self.exner(p,p0=p0)
+
+    # tanphi (pretty self-explanatory)
+    def tanphi(self,lat):
+        return np.tan(deg_to_rad(lat))
+
+    # escape velocity
+    # dePater & Lissauer 2.16
+    def escape(self,r=None):
+        if r is None: r = self.a
+        return np.sqrt(2.*G*self.mass/r)
+
+    # escape parameter 
+    # dePater & Lissauer 4.76
+    def lescape(self,r=None,m=None,temp=None):
+        # defaut settings
+        if r is None: 
+          r = self.a # distance = planetary radius
+        if temp is None: 
+          temp = self.eqtemp(albedo=0.) # equ temp with A=0
+        if m is None: 
+          m = 1.007825e-3/Avogadro # atomic H
+        # computations
+        v0 = np.sqrt(2.*k*temp/m)
+        ve = self.escape(r=r)
+        return (ve/v0)**2
 
 #----------------------------------------------------        
 Earth = Planet() ; Earth.ini("Earth")
