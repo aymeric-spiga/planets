@@ -182,11 +182,13 @@ class Planet:
 ############################################
 
     # Coriolis parameter
-    def fcoriolis(self,lat=45.): return 2.*self.omega*np.sin(deg_to_rad(lat))
+    def fcoriolis(self,lat=45.): 
+        return 2.*self.omega*np.sin(deg_to_rad(lat))
 
     # calculate equivalent temperature
-    def eqtemp(self): 
-        num = (1.-self.albedo)*self.L
+    def eqtemp(self,albedo=None):
+        if albedo is None: albedo = self.albedo
+        num = (1.-albedo)*self.L
         den = 4.*sigma
         return (num/den)**0.25
 
@@ -218,9 +220,9 @@ class Planet:
         if N2 is None:
           N2 = self.N2()
         ##
-        if lz is None: 
-          lz = H
         if h is None:
+          if lz is None: 
+            lz = H
           m = 2*np.pi/lz
           h = m**2 + (4*H*H)**(-1)
           h = g*h ; h = 1./h ; h = N2*h
