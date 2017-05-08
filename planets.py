@@ -103,6 +103,7 @@ class Planet:
         self.R = None ; desc["R"] = "planetary gas constant"
         self.dryadiab = None ; desc["dryadiab"] = "dry adiabatic lapse rate"
         self.omega = None ; desc["omega"] = "planetary rotation rate"
+        self.density = None ; desc["density"] = "density (kg m-3)"
 
 ############################################
 ### USEFUL METHODS FOR VALUES
@@ -140,7 +141,12 @@ class Planet:
           self.dryadiab = None
         # planetary rotation rate
         self.omega = 2.*np.pi/self.day
-
+        # density (assuming spherical shape)
+        if self.mass is not None:
+          self.density = self.mass / ((4./3.)*np.pi*(self.a**3))
+        else:
+          self.density = None
+        
     def ini(self,name):
         # either have the file "name.txt" in /planet
         # ... or have it where you call
