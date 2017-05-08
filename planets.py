@@ -343,6 +343,8 @@ Jupiter = Planet() ; Jupiter.ini("Jupiter")
 Pluto = Planet() ; Pluto.ini("Pluto")
 #----------------------------------------------------
 Mercury = Planet() ; Mercury.ini("Mercury")
+#----------------------------------------------------
+Titan = Planet() ; Titan.ini("Titan")
 
 
 
@@ -405,25 +407,6 @@ Moon.Lequinox = None #Longitude of equinox (deg)
 Moon.Tsbar = None #Mean surface temperature
 Moon.Tsmax = 400. #Maximum surface temperature
 Moon.Tsmin = 100. #Minimum surface temperature
-
-Titan = Planet()
-Titan.name = 'Titan' #Name of the planet
-Titan.a = 2.575e6 #Mean radius of planet
-Titan.g = 1.35 #Surface gravitational acceleration
-Titan.L = Saturn.L #Annual mean solar constant (current)
-Titan.albedo = .21 #Bond albedo (Not yet updated from Cassini)
-#        
-Titan.rsm = None #Semi-major axis
-Titan.year = Saturn.year #Sidereal length of year
-Titan.eccentricity = Saturn.eccentricity # Eccentricity ABOUT SUN
-Titan.day = 15.9452*24.*3600. #Mean tropical length of day
-Titan.obliquity = Saturn.obliquity #Obliquity to plane of Ecliptic
-                                   #(Titan's rotation axis approx parallel
-                                   # to Saturn's
-Titan.Lequinox = Saturn.Lequinox #Longitude of equinox
-#
-Titan.Tsbar = 95. #Mean surface temperature
-Titan.Tsmax = None #Maximum surface temperature
 
 Europa = Planet()
 Europa.name = 'Europa' #Name of the planet
