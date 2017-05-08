@@ -253,6 +253,10 @@ class Planet:
     def acosphi(self,lat):
         return self.a * np.cos(deg_to_rad(lat))
 
+    # tanphia (pretty self-explanatory)
+    def tanphia(self,lat):
+        return np.tan(deg_to_rad(lat))/self.a
+
     # beta (Rossby parameter)
     # -- variation of f with latitude
     def beta(self,lat=None):
