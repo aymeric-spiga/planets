@@ -187,6 +187,15 @@ class Planet:
 ### PHYSICAL CALCULATIONS as METHODS
 ############################################
 
+    # days per year
+    def dayperyear(self):
+        calc = (self.year is not None) and (self.day is not None)
+        if calc:
+            res = self.year / self.day
+        else:
+            res = None
+        return res 
+
     # Coriolis parameter
     def fcoriolis(self,lat=45.): 
         return 2.*self.omega*np.sin(deg_to_rad(lat))
