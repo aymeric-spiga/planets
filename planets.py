@@ -308,18 +308,26 @@ class Planet:
 
     # escape parameter 
     # dePater & Lissauer 4.76
-    def lescape(self,r=None,m=None,temp=None):
+    # m : molar mass in g/mol (default is atomic oxygen)
+    def lescape(self,r=None,m=1.007825,temp=None):
         # defaut settings
         if r is None: 
           r = self.a # distance = planetary radius
         if temp is None: 
           temp = self.eqtemp(albedo=0.) # equ temp with A=0
-        if m is None: 
-          m = 1.007825e-3/Avogadro # atomic H
         # computations
-        v0 = np.sqrt(2.*k*temp/m)
+        denom = (m*1.e-3)/Avogadro
+        v0 = np.sqrt(2.*k*temp/denom)
         ve = self.escape(r=r)
         return (ve/v0)**2
+
+    # Roche limit
+    def roche(self,density,normalized=False,cst=2.456):
+        a_R = cst * (self.density/density)**(1./3.)
+        a = a_R * self.a
+        if normalized: return a_R
+        else: return a
+
 
 #----------------------------------------------------        
 Earth = Planet() ; Earth.ini("Earth")
