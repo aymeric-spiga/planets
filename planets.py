@@ -270,13 +270,19 @@ class Planet:
         if lat is None: lat=0.
         return np.cos(deg_to_rad(lat))*self.a*np.pi/180.
 
-    # specific axial angular momentum
+    # axial angular momentum
     # [= omega * a**2 if neither u, nor lat, is provided]
     def angmom(self,u=None,lat=None):
         if lat is None: lat=0.
         if u is None: u=0.
         acosphi = self.acosphi(lat)
         return acosphi*((self.omega*acosphi)+u)
+
+    # axial angular momentum due to wind
+    def wangmom(self,u=None,lat=None):
+        if lat is None: lat=0.
+        if u is None: u=0.
+        return u*self.acosphi(lat)
 
     # local superotation index
     # -- excess local a.m. over u(equator) = 0
