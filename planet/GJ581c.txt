@@ -1,62 +1,62 @@
-# Mean radius of planet (m)
-a = 1.190e6
+# Mean radius of planet
+a = 11786350.
 
 # Mass of the planet (kg)
-mass = 1303e19
+mass = None
 
 # Surface gravitational acceleration
-g = 0.6192
+g = 18.4
 
 # Bond albedo
-albedo = .55
+albedo = 0.3
 
 # Annual mean solar constant (current)
-L = 1.262 
+L = 3471
 
-# Semi-major axis (m)
-rsm = 5906.38e9
+# Semi-major axis
+rsm = 1.1e10
 
 # Sidereal length of year (earth days)
-year = 90472
+year = None
 
 # Eccentricity
-eccentricity = .2488
+eccentricity = None
 
 # Mean tropical length of day (earth hours)
-day = 153.2928 
+day = 312.22 
 
 # Obliquity to orbit (deg)
-obliquity = 119.6
+obliquity = None 
 
 # Longitude of equinox (deg)
-Lequinox = 3.171 
+Lequinox = None 
 
 # Mean surface temperature
-Tsbar = 45.
+Tsbar = None 
 
 # Maximum surface temperature
-Tsmax = 55. 
+Tsmax = None 
 
 # Molecular weight (g per mol)
 M = 28.
 
 # Specific heat capacity (J per kg per K)
-cp = 1040.82
+cp = 1003.
 
 # Typical atmospheric temperature
-T0 = 70.
+T0 = 356.
 
 # Orbit inclination (deg)
-incl=17.14
+incl = None
 
 # Longitude of ascending node (deg)
-ascend=110.3 
+ascend = None 
 
 # Argument of periapsis (deg)
-omeg=224.066 
+omeg = None 
 
 # date periapsis 
-date_peri=19890905
+date_peri = None
 
 # date equinox 
-date_equi=22360207
+date_equi = None

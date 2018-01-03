@@ -196,9 +196,19 @@ class Planet:
             res = None
         return res 
 
+    # planetary disk area
+    def disk(self):
+        return np.pi*self.a*self.a
+
     # Coriolis parameter
     def fcoriolis(self,lat=45.): 
         return 2.*self.omega*np.sin(deg_to_rad(lat))
+
+    # Rossby number
+    # -- default is a hemispheric wind of speed 50 m/s
+    def Rossby(self,U=50.,L=None):
+        if L is None: L = self.a / 2.
+        return U / (self.fcoriolis()*L)
 
     # calculate equivalent temperature
     def eqtemp(self,albedo=None):
@@ -206,6 +216,10 @@ class Planet:
         num = (1.-albedo)*self.L
         den = 4.*sigma
         return (num/den)**0.25
+
+    # calculate temperature from two-beam simple model
+    def twobeam(self,tau=1,albedo=None):
+        return ((1+0.5*tau)**0.25)*self.eqtemp(albedo=albedo)
 
     # calculate Brunt-Vaisala frequency
     # ex: planets.Earth.N2(dTdz=-6.5e-3)
@@ -215,10 +229,12 @@ class Planet:
         if dTdz is None: dTdz=0.
         return (self.g / T0) * ( self.dryadiab + dTdz )
 
-    # calculate scale height
-    def H(self,T0=None):
+    # calculate scale height -- optional M in g/mol
+    def H(self,T0=None,M=None):
         if T0 is None: T0=self.T0
-        return self.R * T0 / self.g
+        if M is None: RR = self.R
+        else: RR = Rstarkilo / M
+        return RR * T0 / self.g
 
     # calculate pseudo-altitude (log-pressure coordinates)
     def pseudoz(self,pressure,H=None,p0=None):
@@ -306,6 +322,16 @@ class Planet:
     def tanphi(self,lat):
         return np.tan(deg_to_rad(lat))
 
+    # Rossby deformation radius
+    def rossbydef(self):
+        N = np.sqrt(self.N2())
+        Ld = np.sqrt(N*self.H()/self.beta())
+        return Ld
+
+    # dimensionless Rossby deformation radius
+    def rossbydefdim(self):
+        return self.rossbydef() / self.a
+    
     # escape velocity
     # dePater & Lissauer 2.16
     def escape(self,r=None):
