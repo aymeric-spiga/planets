@@ -147,13 +147,13 @@ class Planet:
         else:
           self.density = None
         
-    def ini(self,name):
+    def ini(self,name,whereset=None):
         # either have the file "name.txt" in /planet
-        # ... or have it where you call
+        # ... or set input link in whereset
         string = "planets"
-        whereset = "./"
-        for path in os.environ['PYTHONPATH'].split(os.pathsep):
-          if string in path: whereset = path + "/planet"
+        if whereset is None:
+          for path in os.environ['PYTHONPATH'].split(os.pathsep):
+            if string in path: whereset = path + "/planet"
         if whereset[-1] != "/": whereset = whereset + "/"
         # be consistent
         self.name = name
