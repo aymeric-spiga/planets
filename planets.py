@@ -318,6 +318,10 @@ class Planet:
     def tpot(self,temp,p,p0=1.e5):
         return temp/self.exner(p,p0=p0)
 
+    # temperature <<< potential temperature
+    def invtpot(self,tpot,p,p0=1.e5):
+        return tpot*self.exner(p,p0=p0)
+
     # tanphi (pretty self-explanatory)
     def tanphi(self,lat):
         return np.tan(deg_to_rad(lat))
