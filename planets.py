@@ -44,8 +44,8 @@ def planck(temp,spec,kind="lambda"):
   elif kind == "lambda":
     X = (c**2)/(spec**5)
     Y = c / spec
-  print X
-  print Y
+  print(X)
+  print(Y)
   nnn = 2.*h*X
   ddd = np.exp(h*Y/(k*temp))-1.
   return nnn/ddd
@@ -111,8 +111,8 @@ class Planet:
 
     def show(self):
         # show objects attributes
-        for k, v in vars(self).items():
-          print k,v,desc[k]
+        for k, v in list(vars(self).items()):
+          print(k,v,desc[k])
 
     def convsecond(self):
         # convert earth days and hours in seconds
@@ -167,9 +167,9 @@ class Planet:
              cstplan[variable.strip()] = value.strip() 
            f.close()
         except IOError: 
-           print "file not found: ",name+".txt" ; exit()
+           print("file not found: ",name+".txt") ; exit()
         # fill in object's attributes
-        for k, v in vars(self).items():
+        for k, v in list(vars(self).items()):
           if k != "name":
             try:
               getval = cstplan[k]
